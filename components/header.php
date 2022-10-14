@@ -6,7 +6,7 @@
     <a href="index.php" class="w3-bar-item w3-button">HOME</a>
     <a href="#about" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-user"></i> ABOUT</a>
     <a href="#portfolio" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-th"></i> PORTFOLIO</a>
-    <a href="#contact" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> CONTACT</a>
+    <a href="contact.php" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> CONTACT</a>
     <?php if (isset($_SESSION['user'])) { ?>
       <a href="./db/logout.php" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red">
         <i class="fa fa-user"></i> Logout

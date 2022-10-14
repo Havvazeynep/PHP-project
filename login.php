@@ -7,9 +7,12 @@ require_once './db/connect.php';
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SignIn</title>
+    <title>LogIn</title>
+    <meta name="description" content="PHP Project - Havva Zeynep Akdemir">
+	<meta name="author" content="https://github.com/Havvazeynep , havvazeynepakdemir@gmail.com">
+	<meta name="keywords" content="HTML CSS JS Javascript Web Tasarım SQL mysql PDO PHP">
+    <link rel="icon" href="./assets/img/icon.png">
 
     <link rel="stylesheet" href="./assets/css/style.css">
 
@@ -55,9 +58,6 @@ require_once './db/connect.php';
             </form>
         </div>
     </div>
-
-
-    <?php include './components/footer.php' ?>
 
 </body>
 
