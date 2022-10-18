@@ -41,6 +41,7 @@
                 "message" => "Lütfen tüm alanları doldurunuz",
                 "type" => "danger"
             );
+            header("location: ../login.php");
 	    }
 
         $_SESSION["alert"] = $alert;

@@ -50,7 +50,7 @@ session_start();
                 <p>5079782904</p>
             </div>
         </div>
-        <hr class="w3-opacity">
+        
         <div class="w3-container w3-margin w3-padding-large">
             <?php if (isset($_SESSION["alert"])) { ?>
                 <div class="alert alert-<?php echo $_SESSION["alert"]["type"]; ?>">

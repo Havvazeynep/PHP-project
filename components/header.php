@@ -11,6 +11,12 @@
       <a href="./db/logout.php" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red">
         <i class="fa fa-user"></i> Logout
       </a>
+      <a href="team.php" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red">
+        <i class="fa fa-user"></i> My Team
+      </a>
+      <a href="messages.php" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red">
+        <i class="fa fa-envelope"></i> My Messages
+      </a>
     <?php } else { ?>
       <a href="register.php" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red">
         <i class="fa fa-user"></i> Register
