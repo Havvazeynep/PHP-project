@@ -11,6 +11,7 @@ $team_user_stmt = $conn->prepare("SELECT TM.title,TM.message, TM.date_time FROM 
 $team_user_stmt->bindValue(':u_id', $online_user['id']);
 $team_user_stmt->execute();
 $team_users = $team_user_stmt->fetchAll();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +41,6 @@ $team_users = $team_user_stmt->fetchAll();
 
     <?php include './components/message-navbar.php' ?>
 
-
     <!-- Page content -->
     <div class="w3-main" style="margin-left:320px;">
         <i class="fa fa-bars w3-button w3-white w3-hide-large w3-xlarge w3-margin-left w3-margin-top" onclick="w3_open()"></i>
@@ -49,21 +49,15 @@ $team_users = $team_user_stmt->fetchAll();
         <div id="Borge" class="w3-container person">
             <?php foreach ($team_users as $rs) { ?>
                 <br>
-                <div class="w3-card-4" style="width:50%;">
-                    <header class="w3-container w3-blue">
-                        <h4><?php echo $rs['title'] ?></h4>
-                    </header>
-
-                    <div class="w3-container">
-                        <p><?php echo $rs['message'] ?></p>
-                    </div>
-
-                    <footer class="w3-container w3-blue-gray">
-                        <h6>Tarih: <?php echo $rs['date_time'] ?></h6>
-                    </footer>
-                </div>
+                <h4><?php echo $rs['title'] ?></h4>
+                <p><?php echo $rs['message'] ?></p>
+                <br>
+                <p>Tarih: <?php echo $rs['date_time'] ?></p>
             <?php } ?>
         </div>
+
+
+
         <?php include './components/message-teams.php' ?>
 
     </div>

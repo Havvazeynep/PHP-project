@@ -3,14 +3,6 @@ session_start();
 if (!isset($_SESSION['user'])) {
     header('Location: login.php');
 }
-require_once './db/connect.php';
-
-$online_user = $_SESSION['user'];
-
-$team_user_stmt = $conn->prepare("SELECT TM.title,TM.message, TM.date_time FROM team_users TU INNER JOIN teams T ON TU.team_id=T.id INNER JOIN team_messages TM ON TM.team_id=T.id WHERE TU.user_id = :u_id");
-$team_user_stmt->bindValue(':u_id', $online_user['id']);
-$team_user_stmt->execute();
-$team_users = $team_user_stmt->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,6 +26,7 @@ $team_users = $team_user_stmt->fetchAll();
 
     <!-- Message Style -->
     <link rel="stylesheet" href="./assets/css/message-style.css">
+    
 </head>
 
 <body>
@@ -47,23 +40,34 @@ $team_users = $team_user_stmt->fetchAll();
         <a href="javascript:void(0)" class="w3-hide-large w3-red w3-button w3-right w3-margin-top w3-margin-right" onclick="document.getElementById('id01').style.display='block'"><i class="fa fa-pencil"></i></a>
 
         <div id="Borge" class="w3-container person">
-            <?php foreach ($team_users as $rs) { ?>
-                <br>
-                <div class="w3-card-4" style="width:50%;">
-                    <header class="w3-container w3-blue">
-                        <h4><?php echo $rs['title'] ?></h4>
-                    </header>
-
-                    <div class="w3-container">
-                        <p><?php echo $rs['message'] ?></p>
+            <div id="chatEkrani">
+                <div class="row">
+                    <div id="mesajAlani bg-white" class="col-md-12">
+                        <div class="d-flex">
+                            <div class="alert alert-dark" role="alert">
+                                <b>@kizildas</b> Bu mesaj karşı taraftan geldi!
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <div class="alert alert-info" role="alert">
+                                Bu mesaj sizin tarafınızdan gönderildi! <b>@emrkzl</b>
+                            </div>
+                        </div>
                     </div>
-
-                    <footer class="w3-container w3-blue-gray">
-                        <h6>Tarih: <?php echo $rs['date_time'] ?></h6>
-                    </footer>
+                    <div id="yeniMesajAlani" class="w3-padding-large" style="position: absolute;bottom: 10;">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <input type="text" class="form-control" id="mesaj" placeholder="Mesaj yazınız.." />
+                            </div>
+                            <div class="col-md-3">
+                                <button type="button" class="form-control btn btn-success">Gönder</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            <?php } ?>
+            </div>
         </div>
+
         <?php include './components/message-teams.php' ?>
 
     </div>
