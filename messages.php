@@ -46,25 +46,6 @@ $team_users = $team_user_stmt->fetchAll();
         <i class="fa fa-bars w3-button w3-white w3-hide-large w3-xlarge w3-margin-left w3-margin-top" onclick="w3_open()"></i>
         <a href="javascript:void(0)" class="w3-hide-large w3-red w3-button w3-right w3-margin-top w3-margin-right" onclick="document.getElementById('id01').style.display='block'"><i class="fa fa-pencil"></i></a>
 
-        <div id="Borge" class="w3-container person">
-            <?php foreach ($team_users as $rs) { ?>
-                <br>
-                <div class="w3-card-4" style="width:50%;">
-                    <header class="w3-container w3-blue">
-                        <h4><?php echo $rs['title'] ?></h4>
-                    </header>
-
-                    <div class="w3-container">
-                        <p><?php echo $rs['message'] ?></p>
-                    </div>
-
-                    <footer class="w3-container w3-blue-gray">
-                        <h6>Tarih: <?php echo $rs['date_time'] ?></h6>
-                    </footer>
-                </div>
-            <?php } ?>
-        </div>
-        <?php include './components/message-teams.php' ?>
 
     </div>
 
