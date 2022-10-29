@@ -9,8 +9,8 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <meta name="description" content="PHP Project - Havva Zeynep Akdemir">
-	<meta name="author" content="https://github.com/Havvazeynep , havvazeynepakdemir@gmail.com">
-	<meta name="keywords" content="HTML CSS JS Javascript Web Tasarım SQL mysql PDO PHP">
+    <meta name="author" content="https://github.com/Havvazeynep , havvazeynepakdemir@gmail.com">
+    <meta name="keywords" content="HTML CSS JS Javascript Web Tasarım SQL mysql PDO PHP">
     <link rel="icon" href="./assets/img/icon.png">
 
     <link rel="stylesheet" href="./assets/css/style.css">
@@ -36,6 +36,8 @@ session_start();
                 <?php unset($_SESSION["alert"]); ?>
             <?php } ?>
             <form action="./db/register-control.php" method="post" class="w3-container w3-card-4 w3-light-grey w3-text-blue-gray w3-margin w3-padding-large">
+                <a href="index.php" class="w3-button w3-xlarge w3-circle w3-red w3-card-4" style="float: right;">X</a>
+
                 <h2 class="w3-center">Register</h2>
 
                 <div class="w3-row w3-section">

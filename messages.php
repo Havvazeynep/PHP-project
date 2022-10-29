@@ -3,14 +3,6 @@ session_start();
 if (!isset($_SESSION['user'])) {
     header('Location: login.php');
 }
-require_once './db/connect.php';
-
-$online_user = $_SESSION['user'];
-
-$team_user_stmt = $conn->prepare("SELECT TM.title,TM.message, TM.date_time FROM team_users TU INNER JOIN teams T ON TU.team_id=T.id INNER JOIN team_messages TM ON TM.team_id=T.id WHERE TU.user_id = :u_id");
-$team_user_stmt->bindValue(':u_id', $online_user['id']);
-$team_user_stmt->execute();
-$team_users = $team_user_stmt->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -7,9 +7,6 @@ require_once './db/connect.php';
 
 $online_user = $_SESSION['user'];
 
-// $stmt = $conn->query("SELECT * FROM teams");
-// $teams = $stmt->fetchAll();
-
 $team_user_stmt = $conn->prepare("SELECT * FROM team_users TU,teams T WHERE TU.team_id=T.id AND TU.user_id = :u_id");
 $team_user_stmt->bindValue(':u_id', $online_user['id']);
 $team_user_stmt->execute();

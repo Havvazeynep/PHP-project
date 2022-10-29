@@ -7,10 +7,35 @@ require_once './db/connect.php';
 
 $online_user = $_SESSION['user'];
 
-$team_user_stmt = $conn->prepare("SELECT TM.title,TM.message, TM.date_time, T.team_name FROM team_users TU INNER JOIN teams T ON TU.team_id=T.id INNER JOIN team_messages TM ON TM.team_id=T.id WHERE TU.user_id = :u_id");
+$team_user_stmt = $conn->prepare("SELECT * FROM team_users TU,teams T WHERE TU.team_id=T.id AND TU.user_id = :u_id");
 $team_user_stmt->bindValue(':u_id', $online_user['id']);
 $team_user_stmt->execute();
 $team_users = $team_user_stmt->fetchAll();
+
+if (isset($_POST['team_id'])) {
+    $team_id = $_POST['team_id'];
+
+    $team_name_stmt = $conn->query("SELECT * FROM teams WHERE id = $team_id");
+    $team_name = $team_name_stmt->fetch(PDO::FETCH_ASSOC);
+
+    $user_message_stmt = $conn->prepare("SELECT U.firstname,TM.message, TM.date_time, T.team_name FROM team_messages TM INNER JOIN teams T ON TM.team_id=T.id INNER JOIN users U ON TM.user_id=U.id WHERE TM.team_id = :team_id GROUP BY TM.id ASC");
+    $user_message_stmt->bindValue(':team_id', $team_id);
+    $user_message_stmt->execute();
+    $user_message = $user_message_stmt->fetchAll();
+
+    if(isset($_POST["message"])){
+        $message = $_POST["message"];
+    
+        $message_stmt = $conn->prepare("INSERT INTO team_messages (`message`, `user_id`, team_id) VALUES(:u_message, :u_id, :team_id)");
+        $message_stmt->bindValue(':u_message', $message);
+        $message_stmt->bindValue(':u_id', $online_user['id']);
+        $message_stmt->bindValue(':team_id', $team_id);
+        $message_stmt->execute();
+        
+    }
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,9 +61,7 @@ $team_users = $team_user_stmt->fetchAll();
     <div class="chat">
         <div class="sidebar">
             <div class="d-grid gap-2 col-6 mx-auto">
-                <a href="messages.php" class="btn btn-primary">
-                    <i class="fa fa-envelope"></i> My team
-                </a>
+                <a href="messages.php" class="btn btn-primary">My Profile</a>
             </div>
             <div class="search">
                 <input type="text" placeholder="Ara..">
@@ -46,114 +69,85 @@ $team_users = $team_user_stmt->fetchAll();
             </div>
             <div class="contacts">
                 <ul>
-                    <li>
-                        <a href="#" class="list-group-item">
-                            <div class="contact">
-                                <div class="name">Tayfun Erbilen</div>
-                                <div class="message">Merhaba, bu bir test mesajıdır..</div>
-                            </div>
-                            <div class="notification"></div>
-                        </a>
-                    </li>
-                    <li class="active">
-                        <a href="#" class="list-group-item">
-                            <div class="contact">
-                                <div class="name">Tayfun Erbilen</div>
-                                <div class="message">Merhaba, bu bir test mesajıdır..</div>
-                            </div>
-                            <div class="notification">3</div>
-                        </a>
-                    </li>
                     <?php foreach ($team_users as $rs) { ?>
                         <li>
-                            <a href="#" class="list-group-item">
-                                <div class="contact">
-                                    <div class="name"><?php echo $rs['team_name'] ?></div>
-                                    <div class="message">Merhaba, bu bir test mesajıdır..</div>
+                            <form method="post">
+                                <div class="d-grid gap-2 m-2">
+                                <button class="btn btn-outline-secondary">
+                                    <input type="hidden" name="team_id" value="<?php echo $rs['id'] ?>">
+
+                                    <div class="contact">
+                                        <div class="name"><?php echo $rs['team_name'] ?></div>
+                                    </div>
+                                </button>
                                 </div>
-                                <div class="notification"></div>
-                            </a>
+                            </form>
                         </li>
                     <?php } ?>
                 </ul>
             </div>
         </div>
         <div class="content">
-            <div class="message-header">
-                <div class="user-info">
-                    <div class="user">
-                        <div class="name">Tayfun Erbilen</div>
-                        <div class="time">10 dk önce</div>
-                    </div>
-                </div>
-                <div class="actions">
-                    <ul>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-info-circle"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-ellipsis-v"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="message-content">
-                <div class="message me">
-                    <div class="bubble">
-                        Merhaba tahsin dost, nasıl gidiyor keyifler?
-                    </div>
-                    <div class="time">1dk önce</div>
-                </div>
-                <div class="message">
-                    <div class="bubble">
-                        Merhaba tahsin dost, nasıl gidiyor keyifler?
-                    </div>
-                    <div class="time">1dk önce</div>
-                </div>
-
-                <div class="message">
-                    <div class="bubble">
-                        Merhaba tahsin dost, nasıl gidiyor keyifler?
-                    </div>
-                    <div class="time">1dk önce</div>
-                </div>
-                <?php foreach ($team_users as $rs) { ?>
-                    <div class="message">
-                        <div class="bubble">
-                            <h4><?php echo $rs['title'] ?></h4>
-                            <?php echo $rs['message'] ?>
+            <?php
+            if (isset($team_name)) {
+            ?>
+                <div class="message-header">
+                    <div class="user-info">
+                        <div class="user">
+                            <div class="name"><?php echo $team_name['team_name'] ?></div>
                         </div>
-                        <div class="time">Tarih: <?php echo $rs['date_time'] ?></div>
                     </div>
-                <?php } ?>
+                    <div class="actions">
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-info-circle"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-ellipsis-v"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
 
-            </div>
-            <div class="message-form">
-                <ul>
-                    <li class="emoji-btn">
-                        <a href="#">
-                            <i class="fa fa-laugh"></i>
-                        </a>
-                    </li>
-                    <li class="input">
-                        <input type="text" placeholder="Bir şeyler yaz..">
-                    </li>
-                    <li class="sound-btn">
-                        <a href="#">
-                            <i class="fa fa-microphone"></i>
-                        </a>
-                    </li>
-                    <li class="image-btn">
-                        <a href="#">
-                            <i class="fa fa-image"></i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+                </div>
+                <div class="message-content">
+                    <?php
+                    if (isset($user_message)) {
+                        foreach ($user_message as $rs) {
+                    ?>
+                            <div class="message">
+                                <div class="bubble">
+                                    <h4><?php echo $rs['firstname'] ?></h4>
+                                    <?php echo $rs['message'] ?>
+                                </div>
+                                <div class="time">Tarih: <?php echo $rs['date_time'] ?></div>
+                            </div>
+                        <?php }
+                    } else { ?>
+                        <div></div>
+                    <?php } ?>
+                </div>
+                <div class="message-form">
+                    <form method="post">
+                        <ul>
+                            <input type="hidden" name="team_id" value="<?php echo $team_name['id'] ?>">
+                            <li class="input">
+                                <input type="text" name="message" required placeholder="Bir şeyler yaz..">
+                            </li>
+                            <li class="sound-btn">
+                                <button class="btn btn-outline-secondary">
+                                    Send <i class="fa fa-arrow-alt-circle-right"></i>
+                                </button>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+            <?php } else { ?>
+                <div class="message-header"></div>
+            <?php } ?>
         </div>
     </div>
 

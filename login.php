@@ -39,6 +39,7 @@ if (isset($_SESSION['user'])) {
                 <?php unset($_SESSION["alert"]); ?>
             <?php } ?>
             <form action="./db/login-control.php" method="POST" class="w3-container w3-card-4 w3-light-grey w3-text-blue-gray">
+            <a href="index.php" class="w3-button w3-xlarge w3-circle w3-red w3-card-4" style="float: right;">X</a>
                 <h2 class="w3-center">Log In</h2>
                 <div class="w3-row w3-section">
                     <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-envelope-o"></i></div>

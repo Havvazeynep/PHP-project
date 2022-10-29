@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: 127.0.0.1
--- Üretim Zamanı: 19 Eki 2022, 20:13:52
+-- Üretim Zamanı: 29 Eki 2022, 12:29:29
 -- Sunucu sürümü: 10.4.24-MariaDB
 -- PHP Sürümü: 8.1.6
 
@@ -32,6 +32,7 @@ CREATE TABLE `contact` (
   `firstname` varchar(50) COLLATE utf8_turkish_ci NOT NULL,
   `email` varchar(50) COLLATE utf8_turkish_ci NOT NULL,
   `mesaj` varchar(500) COLLATE utf8_turkish_ci NOT NULL,
+  `status` varchar(20) COLLATE utf8_turkish_ci NOT NULL,
   `date_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
@@ -39,9 +40,9 @@ CREATE TABLE `contact` (
 -- Tablo döküm verisi `contact`
 --
 
-INSERT INTO `contact` (`id`, `firstname`, `email`, `mesaj`, `date_time`) VALUES
-(1, 'Ahmet', 'ahmet@gmail.com', 'bu deneme mesajıdır', '2022-10-14 21:41:43'),
-(2, 'Eda', 'eda@gmail.com', 'bu bir denemedir', '2022-10-19 18:12:28');
+INSERT INTO `contact` (`id`, `firstname`, `email`, `mesaj`, `status`, `date_time`) VALUES
+(1, 'Ahmet', 'ahmet@gmail.com', 'bu deneme mesajıdır', '', '2022-10-14 21:41:43'),
+(2, 'Eda', 'eda@gmail.com', 'bu bir denemedir', '', '2022-10-19 18:12:28');
 
 -- --------------------------------------------------------
 
@@ -94,8 +95,8 @@ INSERT INTO `teams` (`id`, `team_name`, `status`, `date_time`) VALUES
 
 CREATE TABLE `team_messages` (
   `id` int(11) NOT NULL,
-  `title` varchar(100) COLLATE utf8_turkish_ci NOT NULL,
   `message` text COLLATE utf8_turkish_ci NOT NULL,
+  `user_id` int(11) NOT NULL,
   `team_id` int(11) NOT NULL,
   `status` varchar(20) COLLATE utf8_turkish_ci DEFAULT NULL,
   `date_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -105,9 +106,14 @@ CREATE TABLE `team_messages` (
 -- Tablo döküm verisi `team_messages`
 --
 
-INSERT INTO `team_messages` (`id`, `title`, `message`, `team_id`, `status`, `date_time`) VALUES
-(1, 'Deneme', 'Bu bir deneme mesajıdır', 1, NULL, '2022-10-19 14:41:59'),
-(2, 'Merhaba', 'Bu bir takım mesajıdır', 1, NULL, '2022-10-19 15:00:27');
+INSERT INTO `team_messages` (`id`, `message`, `user_id`, `team_id`, `status`, `date_time`) VALUES
+(1, 'Bu bir deneme mesajıdır', 1, 1, NULL, '2022-10-28 21:59:55'),
+(2, 'Bu bir takım mesajıdır', 3, 1, NULL, '2022-10-28 22:00:04'),
+(3, 'chat uygulamasının denemesidir', 1, 10, NULL, '2022-10-28 22:00:37'),
+(4, 'this is text message', 1, 12, '', '2022-10-28 22:00:44'),
+(5, 'merhaba', 1, 12, NULL, '2022-10-29 07:39:52'),
+(6, 'havva', 1, 10, NULL, '2022-10-29 09:12:29'),
+(7, 'merhaba ben mustafa', 3, 1, NULL, '2022-10-29 10:22:15');
 
 -- --------------------------------------------------------
 
@@ -162,9 +168,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `firstname`, `lastname`, `email`, `phone`, `password`, `role_id`, `date_time`) VALUES
-(1, 'Havva Zeynep', 'Akdemir', 'havva.zeynep.16@gmail.com', '5079782904', 'ahmet12345', 1, '2022-10-16 18:30:25'),
+(1, 'Havva Zeynep', 'Akde', 'havva.zeynep.16@gmail.com', '5079782904', 'ahmet12345', 1, '2022-10-21 19:18:35'),
 (2, 'Ahmet', 'Akdemir', 'ahmet@gmail.com', '5555555555', '$2y$12$qZAlIzpEluNuS', 0, '0000-00-00 00:00:00'),
-(3, 'mustafa', 'akdemir', 'mustafa@gmail.com', '555555555', 'ahmethamza', 0, '0000-00-00 00:00:00'),
+(3, 'Mustafa', 'Altunok', 'mustafa@gmail.com', '555555555', 'ahmethamza', 0, '2022-10-29 10:27:07'),
 (4, 'Eda', 'Balsak', 'eda@gmail.com', '5555555555', 'ahmethamza', 0, '0000-00-00 00:00:00'),
 (5, 'zehra', 'aslan', 'zehra@gmail.com', '5555555555', 'ahmethamza', 3, '2022-10-15 06:40:18');
 
@@ -228,7 +234,7 @@ ALTER TABLE `teams`
 -- Tablo için AUTO_INCREMENT değeri `team_messages`
 --
 ALTER TABLE `team_messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `users`

@@ -5,7 +5,7 @@
     <a href="javascript:void(0)" class="w3-bar-item w3-button w3-dark-grey w3-button w3-hover-black w3-left-align" onclick="document.getElementById('id01').style.display='block'">New Message <i class="w3-padding fa fa-pencil"></i></a>
     <a href="chat.php" class="w3-bar-item w3-button"><i class="fa fa-paper-plane w3-margin-right"></i>My Message</a>
     <a href="team.php" class="w3-bar-item w3-button"><i class="fa fa-paper-plane w3-margin-right"></i>My teams</a>
-    <a href="profile.php" class="w3-bar-item w3-button"><i class="fa fa-user w3-margin-right"></i>My Profile</a>
+    <a href="profile.php" class="w3-bar-item w3-button"><i class="fa fa-user w3-margin-right"></i>Setting</a>
     <a href="#" class="w3-bar-item w3-button"><i class="fa fa-trash w3-margin-right"></i>Trash</a>
 </nav>
 
